@@ -19,15 +19,16 @@ const AddClientModal = () => {
 
   const [addClient] = useMutation(ADD_CLIENT, {
     variables: { name, email, phone },
-    update(cache, { data: addClient }) {
-      const { clients } = cache.readQuery({ query: GET_CLIENTS });
+    refetchQueries: [{ query: GET_CLIENTS }],
+    // update(cache, { data: addClient }) {
+    //   const { clients } = cache.readQuery({ query: GET_CLIENTS });
 
-      cache.writeQuery({
-        query: GET_CLIENTS,
-        // data: { clients: clients.concat([addClient]) },
-        data: { clients: clients.concat([...clients, addClient]) },
-      });
-    },
+    //   cache.writeQuery({
+    //     query: GET_CLIENTS,
+    //     // data: { clients: clients.concat([addClient]) },
+    //     data: { clients: clients.concat([...clients, addClient]) },
+    //   });
+    // },
   });
 
   const handleSubmitClient = (e) => {
@@ -42,11 +43,12 @@ const AddClientModal = () => {
     setName("");
     setEmail("");
     setPhone("");
+    // handleClose();
   };
 
   return (
     <>
-      <Button variant='secondary' onClick={handleShow}>
+      <Button className="mb-3" variant='secondary' onClick={handleShow}>
         <div className='d-flex align-items-center'>
           <FaUser className='me-2' />
           <div>Add Client</div>
