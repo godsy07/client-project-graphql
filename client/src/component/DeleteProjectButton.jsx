@@ -10,17 +10,14 @@ const DeleteProjectButton = ({ projectId }) => {
     const navigate = useNavigate();
 
     const [deleteProject] = useMutation(DELETE_PROJECT,{
-        variables: { id: projectId }
+        variables: { id: projectId },
+        onCompleted: () => navigate('/'),
+        refetchQueries: [{ query: GET_PROJECTS }],
     })
-
-    const handleDeleteProject = () => {
-        console.log("delete project")
-        console.log(projectId)
-    }
 
   return (
     <div className='d-flex mt-5 ms-auto'>
-        <Button variant="danger" onClick={handleDeleteProject}>
+        <Button variant="danger" onClick={deleteProject}>
             <FaTrash className='icon'/> Delete Project
         </Button>
     </div>
