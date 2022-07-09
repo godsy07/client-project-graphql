@@ -106,7 +106,11 @@ const mutation = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLID) },
       },
-      resolve(parent, args) {
+      async resolve(parent, args) {
+        const projects = await ProjectModel.find({ clientId:args.id }).count();
+        if (projects > 0) {
+          await ProjectModel.deleteMany({ clientId: args.id });
+        }
         return ClientModel.findByIdAndRemove(args.id);
       },
     },

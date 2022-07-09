@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { GET_PROJECT } from "../queries/projectQueries";
 import { Spinner } from "react-bootstrap";
 import ClientInfo from "../component/ClientInfo";
+import EditProjectForm from "../component/EditProjectForm";
 import DeleteProjectButton from "../component/DeleteProjectButton";
 
 const ProjectPage = () => {
@@ -27,6 +28,8 @@ const ProjectPage = () => {
                 <p className="lead">{data.project.status}</p>
 
                 <ClientInfo client={data.project.client} />
+
+                <EditProjectForm project={data.project} />
 
                 <DeleteProjectButton projectId={data.project.id} />
             </div>
